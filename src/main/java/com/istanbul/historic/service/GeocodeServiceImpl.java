@@ -22,21 +22,27 @@ public class GeocodeServiceImpl {
 
 
     //final String ROOT_URI = "https://api.mapbox.com/geocoding/v5/mapbox.places/Istanbul.json?limit=10&autocomplete=false&fuzzyMatch=false&types=poi&poi=museums&language=en&access_token=pk.eyJ1Ijoic2FtZWVyc2F1cmFiaCIsImEiOiJja2gzazMzdXMwN2IzMnhueXVnOGRrdnVqIn0.ZWgzcWTY0ycDKXPe3whPrA";
-    final String BASE_URL="https://api.mapbox.com/";
-    final String END_POINT="geocoding/v5/mapbox.places/";
+    final String BASE_URL = "https://api.mapbox.com/";
+    final String END_POINT = "geocoding/v5/mapbox.places/";
     final String SEARCH_SUFFIX = ".json";
-    final String PARAMETER_REQUIRED ="?limit=10&autocomplete=false&fuzzyMatch=false&types=poi&language=en";
-    final String ACCESS_TOKEN="&access_token=pk.eyJ1Ijoic2FtZWVyc2F1cmFiaCIsImEiOiJja2gzazMzdXMwN2IzMnhueXVnOGRrdnVqIn0.ZWgzcWTY0ycDKXPe3whPrA";
+    final String PARAMETER_REQUIRED = "?limit=10&autocomplete=false&fuzzyMatch=false&types=poi&language=en";
+    final String ACCESS_TOKEN = "&access_token=pk.eyJ1Ijoic2FtZWVyc2F1cmFiaCIsImEiOiJja2gzazMzdXMwN2IzMnhueXVnOGRrdnVqIn0.ZWgzcWTY0ycDKXPe3whPrA";
     @Autowired
     RestTemplate restTemplate;
 
+    /**
+     * This method is to get all the historic places using MAPBOX restAPI which is consumed through {@link RestTemplate}
+     *
+     * @param city name of city provided by user.
+     * @return JSON String denoting the {@link List} of {@link Itenary}
+     */
     public String getHistoricPlaces(String city) {
         System.out.println(city);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(BASE_URL+END_POINT+city+SEARCH_SUFFIX+PARAMETER_REQUIRED+ACCESS_TOKEN, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(BASE_URL + END_POINT + city + SEARCH_SUFFIX + PARAMETER_REQUIRED + ACCESS_TOKEN, HttpMethod.GET, entity, String.class);
 
         List<Itenary> itenaries = new ArrayList<>();
 
@@ -61,7 +67,7 @@ public class GeocodeServiceImpl {
                                 Itenary itenary = new Itenary();
                                 String[] name = placeName.split(", ");
                                 itenary.setName(name[0]);
-                                itenary.setRegion(name[name.length-3]);
+                                itenary.setRegion(name[name.length - 3]);
 
                                 itenary.setCategories(categories);
                                 itenaries.add(itenary);
