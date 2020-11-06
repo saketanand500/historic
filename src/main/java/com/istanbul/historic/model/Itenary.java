@@ -6,12 +6,18 @@ import java.util.List;
 
 public class Itenary {
 
+    /*----------------------------------------------- Member Variables -----------------------------------------------*/
+
     @SerializedName("name")
     private String name;
+
     @SerializedName("categories")
     private List<String> categories;
+
     @SerializedName("region")
     private String region;
+
+    /*--------------------------------------------- Getters and Setters ----------------------------------------------*/
 
     public String getName() {
         return name;
